@@ -17,8 +17,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <img src="~/images/coffees/@Html.DisplayFor(modelItem => item.ImagePath)" />
+                    <td class="text-center">
+                        <img src="~/images/coffees/@Html.DisplayFor(modelItem => item.ImagePath)" class="img-thumbnail" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <h5>@Html.DisplayFor(modelItem => item.Price)</h5>
                     </td>
                 </tr>
             </table>
