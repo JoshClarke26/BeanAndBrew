@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Coffee>
+
+@{
+    ViewData["Title"] = "Browse";
+}
+
+<h1>Browse</h1>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <table class="table">
+                <tr>
+                    <td>
+                        <h3 class="text-center">@Html.DisplayFor(modelItem => item.Name)</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="~/images/coffees/@Html.DisplayFor(modelItem => item.ImagePath)" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+</div>
