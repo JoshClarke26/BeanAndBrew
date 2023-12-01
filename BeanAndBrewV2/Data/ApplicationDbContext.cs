@@ -16,5 +16,7 @@ namespace BeanAndBrewV2.Data
         public DbSet<BeanAndBrewV2.Models.Coffee> Coffee { get; set; } = default!;
 
         public DbSet<BeanAndBrewV2.Models.CoffeeOrder> CoffeeOrder { get; set; } = default!;
+
+        public DbSet<BeanAndBrewV2.Models.TableOrder> TableOrder { get; set; } = default!;
     }
 }
