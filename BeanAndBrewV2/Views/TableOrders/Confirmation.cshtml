@@ -1,0 +1,20 @@
+﻿@model BeanAndBrewV2.Models.TableOrder
+
+@{
+    ViewData["Title"] = "Confirmation";
+}
+
+<h1 class="text-center">Booking Confirmation</h1>
+
+<div>
+    <hr />
+    <div class="row text-center">
+        <div class="col mx-auto">
+            <h5>Booking Date: <span style="font-weight: normal;">@Model.BookingTime.ToLongDateString()</span></h5>
+            <h5>Booking Time: <span style="font-weight: normal;">@Model.BookingTime.ToShortTimeString()</span></h5>
+            <h5>Amount Of People: <span style="font-weight: normal;">@Model.NoOfPeople</span></h5>
+            <h5>Location: <span style="font-weight: normal;">@Model.Location</span></h5>
+            <h6>Thank you for booking Bean & Brew in @Model.Location.</h6>
+        </div>
+    </div>
+</div>

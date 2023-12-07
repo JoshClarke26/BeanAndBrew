@@ -7,8 +7,11 @@ namespace BeanAndBrewV2.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Booking Time")]
         public DateTime BookingTime { get; set; }
+        [Display(Name = "Number Of People")]
         public int NoOfPeople { get; set; }
+        [Display(Name = "Location")]
         public LocationList Location { get; set; }
         [ForeignKey("ApplicationUser")]
         public string? UserId { get; set; }

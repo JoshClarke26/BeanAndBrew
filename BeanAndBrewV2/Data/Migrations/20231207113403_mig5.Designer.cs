@@ -4,6 +4,7 @@ using BeanAndBrewV2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeanAndBrewV2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231207113403_mig5")]
+    partial class mig5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,14 +68,9 @@ namespace BeanAndBrewV2.Data.Migrations
                     b.Property<int>("Tickets")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BakingLessonId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("BakingLessonSlot");
                 });
@@ -390,13 +388,7 @@ namespace BeanAndBrewV2.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BeanAndBrewV2.Models.ApplicationUser", "User")
-                        .WithMany("BakingLessons")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("BakingLesson");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BeanAndBrewV2.Models.CoffeeOrder", b =>
@@ -488,8 +480,6 @@ namespace BeanAndBrewV2.Data.Migrations
 
             modelBuilder.Entity("BeanAndBrewV2.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("BakingLessons");
-
                     b.Navigation("CoffeeOrders");
                 });
 #pragma warning restore 612, 618

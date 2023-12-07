@@ -1,0 +1,28 @@
+﻿@model BeanAndBrewV2.Models.BakingLessonSlot
+
+@{
+    ViewData["Title"] = "Book";
+}
+
+<h1 class="text-center">Book Lesson</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <form asp-action="Book">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BakingLessonId" class="control-label"></label>
+                <select asp-for="BakingLessonId" class="form-select" asp-items="ViewBag.BakingLessonId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tickets" class="control-label"></label>
+                <input asp-for="Tickets" class="form-control" />
+                <span asp-validation-for="Tickets" class="text-danger"></span>
+            </div>
+            <div class="form-group"><br />
+                <input type="submit" value="Create" class="btn btn-primary" style="width: 100%;"/>
+            </div>
+        </form>
+    </div>
+</div>

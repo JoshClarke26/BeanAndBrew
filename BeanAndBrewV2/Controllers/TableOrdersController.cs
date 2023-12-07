@@ -31,7 +31,7 @@ namespace BeanAndBrewV2.Controllers
         {
 
             string? userId = _userManager.GetUserId(HttpContext.User);
-            int userPermission = _userManager.GetUserAsync(HttpContext.User).Result.StaffPermission;
+            int userPermission = _userManager.GetUserAsync(HttpContext.User).Result!.StaffPermission;
             if (userPermission == 0)
             {
                 return Redirect("~/");
@@ -178,5 +178,43 @@ namespace BeanAndBrewV2.Controllers
         {
           return (_context.TableOrder?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        public IActionResult Book()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Book([Bind("Id,BookingTime,NoOfPeople,Location")] TableOrder tableOrder)
+        {
+            if (ModelState.IsValid)
+            {
+                tableOrder.User = await _userManager.GetUserAsync(User);
+                _context.Add(tableOrder);
+                await _context.SaveChangesAsync();
+                return Redirect("~/TableOrders/Confirmation/" + tableOrder.Id);
+            }
+            return View(tableOrder);
+        }
+
+        public async Task<IActionResult> Confirmation(int? id)
+        {
+            if (id == null || _context.TableOrder == null)
+            {
+                return NotFound();
+            }
+
+            var tableOrder = await _context.TableOrder
+                .Include(t => t.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (tableOrder == null)
+            {
+                return NotFound();
+            }
+
+            return View(tableOrder);
+        }
+
     }
 }
