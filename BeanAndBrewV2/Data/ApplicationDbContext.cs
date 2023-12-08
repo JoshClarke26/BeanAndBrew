@@ -22,5 +22,11 @@ namespace BeanAndBrewV2.Data
         public DbSet<BeanAndBrewV2.Models.BakingLesson> BakingLesson { get; set; } = default!;
 
         public DbSet<BeanAndBrewV2.Models.BakingLessonSlot> BakingLessonSlot { get; set; } = default!;
+
+        public DbSet<BeanAndBrewV2.Models.Hamper> Hamper { get; set; } = default!;
+
+        public DbSet<BeanAndBrewV2.Models.HamperItem> HamperItem { get; set; } = default!;
+
+        public DbSet<BeanAndBrewV2.Models.HamperItemOrder> HamperItemOrder { get; set; } = default!;
     }
 }

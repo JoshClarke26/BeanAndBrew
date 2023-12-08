@@ -9,5 +9,6 @@ namespace BeanAndBrewV2.Models
         public int StaffPermission { get; set; }
         public ICollection<CoffeeOrder>? CoffeeOrders { get; } = new List<CoffeeOrder>();
         public ICollection<BakingLessonSlot> BakingLessons { get; } = new List<BakingLessonSlot>();
+        public ICollection<Hamper> Hampers { get; } = new List<Hamper>();
     }
 }
