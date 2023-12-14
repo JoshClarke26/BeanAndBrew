@@ -166,7 +166,8 @@ namespace BeanAndBrewV2.Controllers
           return (_context.Hamper?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        public async Task<IActionResult> Order()
+        [Route("/order/hamper/{orderId?}")]
+        public async Task<IActionResult> Order(int? orderId)
         {
             dynamic myModels = new ExpandoObject();
             myModels.Hampers = await _context.Hamper.ToListAsync();

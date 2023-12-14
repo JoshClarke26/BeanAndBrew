@@ -7,16 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BeanAndBrewV2.Data;
 using BeanAndBrewV2.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BeanAndBrewV2.Controllers
 {
+    [Authorize]
     public class CoffeeOrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CoffeeOrdersController(ApplicationDbContext context)
+        public CoffeeOrdersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: CoffeeOrders
@@ -169,6 +175,42 @@ namespace BeanAndBrewV2.Controllers
         private bool CoffeeOrderExists(int id)
         {
           return (_context.CoffeeOrder?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [Route("/order/coffee/{CoffeeId}")]
+        public async Task<IActionResult> Order(int CoffeeId)
+        {
+            CoffeeOrder order = new CoffeeOrder();
+            order.Amount = 1;
+            order.Coffee = _context.Coffee.Find(CoffeeId);
+            order.CoffeeId = CoffeeId;
+            order.User = await _userManager.GetUserAsync(User);
+            order.UserId = _userManager.GetUserAsync(User).Result!.Id;
+            _context.Add(order);
+            await _context.SaveChangesAsync();
+            return Redirect("/order/coffee/confirmation/" + order.Id);
+        }
+
+        [Route("/order/coffee/confirmation/{id?}")]
+        public async Task<IActionResult> Confirmation(int? id)
+        {
+            if (id == null || _context.CoffeeOrder == null)
+            {
+                return NotFound();
+            }
+
+            var coffeeOrder = await _context.CoffeeOrder
+                .Include(t => t.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            ViewBag.Coffee = _context.Coffee.Find(_context.CoffeeOrder.Find(id)!.CoffeeId)!.Name;
+            ViewBag.Price = _context.Coffee.Find(_context.CoffeeOrder.Find(id)!.CoffeeId)!.Price.ToString("C", CultureInfo.CurrentCulture);
+            if (coffeeOrder == null)
+            {
+                return NotFound();
+            }
+
+            return View(coffeeOrder);
         }
     }
 }

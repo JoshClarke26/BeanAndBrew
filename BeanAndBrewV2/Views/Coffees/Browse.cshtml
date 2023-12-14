@@ -24,9 +24,12 @@
                 <tr>
                     <td class="text-center">
                         <h5>@Html.DisplayFor(modelItem => item.Price)</h5>
+                        <button class="btn btn-info" onclick="orderCoffee(event)" id="@Html.DisplayFor(modelItem => item.Id)">Purchase</button>
                     </td>
                 </tr>
             </table>
         </div>
     }
 </div>
+
+<script src="~/js/coffeeOrder.js"></script>

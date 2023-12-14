@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Dynamic;
 
 namespace BeanAndBrewV2.Controllers
 {
@@ -208,6 +209,7 @@ namespace BeanAndBrewV2.Controllers
             var tableOrder = await _context.TableOrder
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (tableOrder == null)
             {
                 return NotFound();
