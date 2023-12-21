@@ -3,6 +3,35 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4 fw-bold">Bean & Brew</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col pb-5">
+            <h2 class="display-7 fw-bold">Coffees</h2>
+            <div class="row">
+                <i class="bi bi-cup-hot-fill" style="font-size: 12rem;"></i>
+            </div>
+            <a class="btn btn-info px-5" href="/Coffees/Browse">Order Now</a>
+        </div>
+        <div class="col pb-5">
+            <h2 class="display-7 fw-bold">Hampers</h2>
+            <div class="row">
+                <i class="bi bi-basket-fill" style="font-size: 12rem;"></i>
+            </div>
+            <a class="btn btn-info px-5" href="/Order/Hamper">Order Now</a>
+        </div>
+        <div class="col pb-5">
+            <h2 class="display-7 fw-bold">Baking Lessons</h2>
+            <div class="row">
+                <i class="bi bi-cake2-fill" style="font-size: 12rem;"></i>
+            </div>
+            <a class="btn btn-info px-5" asp-controller="BakingLessonSlots" asp-action="Book">Book Now</a>
+        </div>
+        <div class="col pb-5">
+            <h2 class="display-7 fw-bold">Resturants</h2>
+            <div class="row">
+                <i class="bi bi-shop" style="font-size: 12rem;"></i>
+            </div>
+            <a class="btn btn-info px-5" asp-controller="TableOrders" asp-action="Book">Reserve Table</a>
+        </div>
+    </div>
 </div>

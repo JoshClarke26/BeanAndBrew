@@ -37,7 +37,7 @@ body {
 
 .bb-logo {
     font-family: logoFont;
-    font-size: 32px;
+    font-size: 2rem;
 }
 
 @font-face {
