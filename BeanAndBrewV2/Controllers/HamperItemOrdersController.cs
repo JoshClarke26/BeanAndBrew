@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BeanAndBrewV2.Data;
 using BeanAndBrewV2.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace BeanAndBrewV2.Controllers
 {
     public class HamperItemOrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HamperItemOrdersController(ApplicationDbContext context)
+        public HamperItemOrdersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: HamperItemOrders
@@ -170,5 +174,40 @@ namespace BeanAndBrewV2.Controllers
         {
           return (_context.HamperItemOrder?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        [Authorize]
+        [Route("order/hamper/item/{itemAmount}/{itemID}")]
+        public async Task<IActionResult> Add(int itemAmount, int itemID)
+        {
+            Hamper? currentHamper = null;
+            foreach (var hamper in _context.Hamper)
+            {
+                if (hamper.UserId == _userManager.GetUserAsync(User).Result!.Id && hamper.isActive)
+                {
+                    currentHamper = hamper;
+                }
+            }
+            if (currentHamper == null)
+            {
+                currentHamper = new Hamper();
+                currentHamper.User = await _userManager.GetUserAsync(User);
+                currentHamper.UserId = _userManager.GetUserAsync(User).Result!.Id;
+                currentHamper.isActive = true;
+                _context.Add(currentHamper);
+                await _context.SaveChangesAsync();
+            }
+
+            HamperItemOrder itemOrder = new HamperItemOrder();
+            itemOrder.Amount = itemAmount;
+            itemOrder.HamperItemId = itemID;
+            itemOrder.HamperItem = _context.HamperItem.Find(itemID);
+            itemOrder.HamperId = currentHamper.Id;
+            itemOrder.Hamper = currentHamper;
+            _context.Add(itemOrder);
+            await _context.SaveChangesAsync();
+
+            return Redirect("/order/hamper/" + currentHamper.Id); 
+        }
+
     }
 }

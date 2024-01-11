@@ -16,8 +16,8 @@
                 <img src="~/images/hamperItems/@item.ImagePath" class="img-thumbnail">
                 <h4>@Html.DisplayFor(modelItem => item.Price)</h4>
                 <form>
-                    <button class="btn btn-info">Add To Order</button>
-                    <select class="form-select d-inline" style="width: 30%;" asp-items="@ViewBag.AmountList">
+                    <button class="btn btn-info" id="@item.Id" onclick="addItem(event)">Add To Order</button>
+                    <select class="form-select d-inline" style="width: 30%;" asp-items="@ViewBag.AmountList" id="S-@item.Id">
                         @for (int i = 1; i < 10; i++)
                         {
                             <option value="@i">@i</option>
@@ -32,5 +32,11 @@
 <div class="card">
     <div class="card-body">
         <h4 class="card-title text-center">Hamper Basket</h4>
+        @foreach (HamperItemOrder item in Model.Orders)
+        {
+            <p>@item.HamperItem!.Name (@item.Amount)</p>
+        }
     </div>
 </div>
+
+<script src="~/js/hamperItem.js"></script>

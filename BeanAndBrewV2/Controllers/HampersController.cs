@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BeanAndBrewV2.Data;
 using BeanAndBrewV2.Models;
 using System.Dynamic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BeanAndBrewV2.Controllers
 {
@@ -166,6 +167,7 @@ namespace BeanAndBrewV2.Controllers
           return (_context.Hamper?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
+        [Authorize]
         [Route("/order/hamper/{orderId?}")]
         public async Task<IActionResult> Order(int? orderId)
         {

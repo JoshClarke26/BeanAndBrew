@@ -14,5 +14,6 @@ namespace BeanAndBrewV2.Models
         public string? UserId { get; set; }
         public virtual ApplicationUser? User { get; set; }
         public ICollection<HamperItemOrder> HamperItems { get; } = new List<HamperItemOrder>();
+        public bool isActive { get; set; }
     }
 }
